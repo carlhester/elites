@@ -6,20 +6,33 @@ import (
 
 
 type player struct {
-    ID int
+    Name string
     attribs map[string]Attrib
 }
 
-type Attrib interface { 
+type Attrib interface {
     Get()
 }
 
-func (p *player)AddAttrib(name string, attrib Attrib) { 
+func (p *player)AddAttrib(name string, attrib Attrib) {
     p.attribs[name] = attrib
 }
 
+func (p *player)HasAttrib(name string) bool{
+    if _, ok := p.attribs[name]; ok  {
+        return true
+    }
+    return false
+}
 
-type health struct { 
+func (p *player)RemoveAttrib(attrib string) { 
+    _, ok := p.attribs[attrib]
+    if ok { 
+        delete(p.attribs, attrib)
+    }
+}
+
+type health struct {
     hp int
 }
 
@@ -31,26 +44,26 @@ type game struct {
     turn int
 }
 
-func (g game)ShowStatus() { 
-    fmt.Printf("P1: %+v\n", g.p1)
-    fmt.Printf("P2: %+v\n", g.p2)
-}
-
 func main() {
-    p1 := &player{ID: 1, attribs: make(map[string]Attrib)}
-    p2 := &player{ID: 2, attribs: make(map[string]Attrib)}
+    var players []*player
+    p1 := &player{Name: "P1", attribs: make(map[string]Attrib)}
+    p2 := &player{Name: "P2", attribs: make(map[string]Attrib)}
 
     p1.AddAttrib("health", health{hp: 10})
     p2.AddAttrib("health", health{hp: 10})
-    
-    
-    g := &game{p1: p1, p2: p2,}
+    players = append(players, p1, p2)
+
+    //g := &game{p1: p1, p2: p2,}
 
     for turn := 0; turn < 10; turn++ {
-        g.ShowStatus()
+       // g.ShowStatus()
+       for _, p := range players{
+           fmt.Println(p.Name)
        // P1Turn()
        // ShowStatus()
        // P2Turn()
+
+        }
     }
 
 }
