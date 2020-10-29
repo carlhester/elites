@@ -12,3 +12,12 @@ Elites:
       Uses: 1 
 - Name: Joe
   Hp: 10
+  Moves: 
+    - Name: swing
+      Value: 3
+      MoveType: attack
+      Uses: -1 
+    - Name: heal
+      Value: 10
+      MoveType: heal
+      Uses: 1 
