@@ -32,15 +32,11 @@ func (g game) GetInput() int {
     fmt.Printf("%s's command: ", g.players[g.turn-1].name)
 	reader := bufio.NewReader(os.Stdin)
 	input, _ := reader.ReadString('\n')
+    if input[0:1] == "q" { 
+        quitGame("Thanks for playing!")
+    } 
     val, _ := strconv.Atoi(input[0:1])
 	return val
-}
-
-type move struct {
-	name     string
-	value    int
-	moveType string
-    uses int
 }
 
 type player struct {
@@ -63,21 +59,42 @@ func (p *player) doNextMove() {
 }
 
 func (p player) showOpts() {
-    var count string
 	for i := range p.moves {
         if p.moves[i].uses == -1 { 
-            count = "∞"
+            fmt.Printf("[%d]  %s\n", i, p.moves[i].name)
         } else {
-            count = strconv.Itoa(p.moves[i].uses)
+            fmt.Printf("[%d]  %s (uses: %d)\n", i, p.moves[i].name, p.moves[i].uses)
         }
 
-        fmt.Printf("[%d]  %s (uses: %s)\n", i, p.moves[i].name, count)
 	}
 }
 
-func (p *player) handleInput(cmd int) {
+func (p *player) handleInput(cmd int) error {
+    if  cmd > len(p.moves) { 
+        return fmt.Errorf("Invalid Selection")
+    }
+    if p.moves[cmd].uses == 0 { 
+        return fmt.Errorf("No uses left")
+    }
+    if p.moves[cmd].uses > 0 { 
+        p.moves[cmd].uses -= 1 
+    }
 	p.nextMove = p.moves[cmd]
+    return nil
 }
+
+type move struct {
+	name     string
+	value    int
+	moveType string
+    uses int
+}
+
+func quitGame(msg string) { 
+    fmt.Println(msg)
+    os.Exit(0)
+}
+
 
 func main() {
 	var players []*player
@@ -90,14 +107,24 @@ func main() {
 	p2 := &player{name: "P2", hp: 100, moves: []move{heal1, attack}, enemy: p1}
 	p1.enemy = p2
 
+    var validInput bool
     g := &game{turn: 1}
 	g.players = append(players, p1, p2)
-
 	for turn := 0; turn < 10; turn++ {
 		for _, p := range g.players {
 			g.showStatus()
-			p.showOpts()
-			p.handleInput(g.GetInput())
+            g.players[g.turn-1].showOpts()
+
+            validInput = false
+            for validInput != true { 
+                err := p.handleInput(g.GetInput())
+                if err != nil { 
+                    fmt.Println(err.Error())
+                    continue
+                } 
+                validInput = true 
+            }
+
 			p.doNextMove()
             g.changeTurns()
 		}
