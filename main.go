@@ -2,46 +2,28 @@ package main
 
 import (
 	"fmt"
+	"bufio"
+    "os"
+    "strconv"
 )
 
+type move struct{
+    name string
+    movetype string
+    value int
+}
+
+func (m move)execute(p *player) { 
+    
+}
+
+
 type player struct {
-	Name    string
-	attribs map[string]Attrib
+	name    string
+    health int
+    moves []move
 }
 
-type Attrib interface {
-	Get()
-}
-
-func (p *player) AddAttrib(name string, attrib Attrib) {
-	p.attribs[name] = attrib
-}
-
-func (p *player) HasAttrib(name string) bool {
-	if _, ok := p.attribs[name]; ok {
-		return true
-	}
-	return false
-}
-
-func (p *player) RemoveAttrib(attrib string) {
-	_, ok := p.attribs[attrib]
-	if ok {
-		delete(p.attribs, attrib)
-	}
-}
-
-type health struct {
-	hp int
-}
-
-func (h health) Get() {}
-
-type heal struct {
-	hp int
-}
-
-func (h heal) Get() {}
 
 type game struct {
 	p1   *player
@@ -49,31 +31,31 @@ type game struct {
 	turn int
 }
 
+func (p player)showOpts() { 
+    fmt.Println(p.moves)
+}
+
+
 func main() {
 	var players []*player
-	p1 := &player{Name: "P1", attribs: make(map[string]Attrib)}
-	p2 := &player{Name: "P2", attribs: make(map[string]Attrib)}
+    healme := move{name: "healme", value: 3, movetype: "HEAL"}
+    p1 := &player{name: "P1", health: 100, moves: []move{healme}}
 
-	p1.AddAttrib("health", health{hp: 10})
-	p2.AddAttrib("health", health{hp: 10})
-	players = append(players, p1, p2)
+	players = append(players, p1)
 
 	for turn := 0; turn < 10; turn++ {
 		for _, p := range players {
-			p.AddAttrib("heal", heal{hp: 5})
-			DoHeal(p)
-			fmt.Printf("%+v\n", p)
+            p.showOpts() 
+            cmd := GetInput()
+            fmt.Println(cmd)
 		}
 	}
 }
 
-func DoHeal(p *player) {
-	if p.HasAttrib("heal") {
-		if p.HasAttrib("health") {
-			newHp := p.attribs["health"].(health).hp + p.attribs["heal"].(heal).hp
-			p.RemoveAttrib("heal")
-			p.RemoveAttrib("health")
-			p.AddAttrib("health", health{hp: newHp})
-		}
-	}
+func GetInput() int {
+	reader := bufio.NewReader(os.Stdin)
+	input, _ := reader.ReadString('\n')
+	inputChar := input[0:1]
+    val, _ := strconv.Atoi(inputChar)
+    return val
 }
