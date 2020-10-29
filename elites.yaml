@@ -1,0 +1,14 @@
+Elites:
+- Name: Bob
+  Hp: 5
+  Moves: 
+    - Name: swing
+      Value: 3
+      MoveType: attack
+      Uses: -1 
+    - Name: heal
+      Value: 10
+      MoveType: heal
+      Uses: 1 
+- Name: Joe
+  Hp: 10
