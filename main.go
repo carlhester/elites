@@ -32,8 +32,7 @@ func (g game) GetInput() int {
     fmt.Printf("%s's command: ", g.players[g.turn-1].name)
 	reader := bufio.NewReader(os.Stdin)
 	input, _ := reader.ReadString('\n')
-	inputChar := input[0:1]
-	val, _ := strconv.Atoi(inputChar)
+    val, _ := strconv.Atoi(input[0:1])
 	return val
 }
 
@@ -41,6 +40,7 @@ type move struct {
 	name     string
 	value    int
 	moveType string
+    uses int
 }
 
 type player struct {
@@ -63,8 +63,15 @@ func (p *player) doNextMove() {
 }
 
 func (p player) showOpts() {
+    var count string
 	for i := range p.moves {
-		fmt.Println(i, p.moves[i].name)
+        if p.moves[i].uses == -1 { 
+            count = "∞"
+        } else {
+            count = strconv.Itoa(p.moves[i].uses)
+        }
+
+        fmt.Printf("[%d]  %s (uses: %s)\n", i, p.moves[i].name, count)
 	}
 }
 
@@ -74,10 +81,13 @@ func (p *player) handleInput(cmd int) {
 
 func main() {
 	var players []*player
-	healme := move{name: "heal", value: 3, moveType: "heal"}
-	attack := move{name: "attack", value: 2, moveType: "attack"}
-	p1 := &player{name: "P1", hp: 100, moves: []move{healme, attack}}
-	p2 := &player{name: "P2", hp: 100, moves: []move{healme, attack}, enemy: p1}
+    heal1 := move{name: "heal1", value: 1, moveType: "heal", uses: -1}
+    heal2 := move{name: "heal2", value: 2, moveType: "heal", uses: -1}
+    heal3 := move{name: "heal3", value: 3, moveType: "heal", uses: -1}
+    heal4 := move{name: "heal4", value: 4, moveType: "heal", uses: 2}
+    attack := move{name: "attack", value: 2, moveType: "attack", uses: -1}
+	p1 := &player{name: "P1", hp: 100, moves: []move{heal1, heal2, heal3, heal4, attack}}
+	p2 := &player{name: "P2", hp: 100, moves: []move{heal1, attack}, enemy: p1}
 	p1.enemy = p2
 
     g := &game{turn: 1}

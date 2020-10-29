@@ -1,0 +1,7 @@
+reduce uses on use
+disallow use if use is zero
+add stun/other attack types
+load mobs/moves from yaml
+pretty display
+separate output to its own object
+
