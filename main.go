@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"time"
 
 	"gopkg.in/yaml.v2"
 )
@@ -126,6 +127,11 @@ func main() {
 	g.Run()
 }
 
+func Clear() {
+	fmt.Print("\033[2J")
+	fmt.Print("\033[H")
+}
+
 func CharacterSelectMenu(player int, chars Characters) Elite {
 	for i, c := range chars.Elites {
 		fmt.Println(i, c)
@@ -134,7 +140,35 @@ func CharacterSelectMenu(player int, chars Characters) Elite {
 	return chars.Elites[choice]
 }
 
+func MainMenu() {
+	Clear()
+
+	for i := 0; i < 13; i++ {
+		fmt.Printf("*")
+		time.Sleep(100 * time.Millisecond)
+	}
+	time.Sleep(1 * time.Second)
+	fmt.Printf("\n*   ELITE   *\n")
+	time.Sleep(1 * time.Second)
+	fmt.Printf("*           *\n")
+	time.Sleep(1 * time.Second)
+	fmt.Printf("*  MONSTER  *\n")
+	time.Sleep(1 * time.Second)
+	fmt.Printf("*           *\n")
+	time.Sleep(1 * time.Second)
+	fmt.Printf("*   CARDS   *\n")
+	for i := 0; i < 13; i++ {
+		fmt.Printf("*")
+		time.Sleep(100 * time.Millisecond)
+	}
+	time.Sleep(1 * time.Second)
+	fmt.Printf("\n\nPress enter to continue...")
+	_ = GetInput()
+
+}
+
 func (g game) Run() {
+	MainMenu()
 	chars := LoadElites()
 	player1 := CharacterSelectMenu(1, chars)
 	player2 := CharacterSelectMenu(2, chars)
