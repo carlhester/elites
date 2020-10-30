@@ -155,8 +155,11 @@ func CharacterSelectMenu(player int, chars Characters) Elite {
 		}
 		fmt.Println()
 	}
-	fmt.Printf("\n\nSelect your fighter:\n")
+	fmt.Printf("\n\nPlayer %d! Select your fighter: ", player)
 	choice := GetInput()
+	fmt.Printf("\n\n%s! Wise choice!\n", chars.Elites[choice].Name)
+	time.Sleep(1 * time.Second)
+	Clear()
 	return chars.Elites[choice]
 }
 
