@@ -13,11 +13,11 @@ Elites:
 - Name: Joe
   Hp: 10
   Moves: 
-    - Name: swing
+    - Name: kick
       Value: 3
       MoveType: attack
       Uses: -1 
-    - Name: heal
+    - Name: bandage
       Value: 10
       MoveType: heal
       Uses: 1 

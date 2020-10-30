@@ -133,8 +133,17 @@ func Clear() {
 }
 
 func CharacterSelectMenu(player int, chars Characters) Elite {
+	fmt.Printf("\n\nSelect your fighter:\n")
+
 	for i, c := range chars.Elites {
-		fmt.Println(i, c)
+		fmt.Printf("[%d]  ", i)
+		fmt.Printf("Name: %s\t", c.Name)
+		fmt.Printf("HP: %d\t", c.Hp)
+		fmt.Printf("Moves: ")
+		for _, x := range c.Moves {
+			fmt.Printf("%s (%s)\t", x.Name, x.MoveType)
+		}
+		fmt.Println()
 	}
 	choice := GetInput()
 	return chars.Elites[choice]
