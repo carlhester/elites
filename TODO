@@ -7,6 +7,3 @@ separate output to its own object
 add move descriptions array that prints when a move is used
 x -- handle improper moves by looping until valid input received
 x -- add quit command
-
-
-
