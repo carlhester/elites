@@ -21,7 +21,7 @@ type Characters struct {
 	Elites []Elite `yaml:"Elites"`
 }
 
-func GetElites() {
+func LoadElites() Characters {
 	var chars Characters
 	source, err := ioutil.ReadFile("./elites.yaml")
 	if err != nil {
@@ -31,9 +31,7 @@ func GetElites() {
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
-	for _, c := range chars.Elites {
-		fmt.Printf("%+v\n\n", c)
-	}
+	return chars
 }
 
 type game struct {
@@ -123,19 +121,21 @@ func quitGame(msg string) {
 }
 
 func main() {
-	GetElites()
-	os.Exit(0)
-	var players []*player
-	heal1 := move{Name: "heal1", Value: 1, MoveType: "heal", Uses: -1}
-	heal2 := move{Name: "heal2", Value: 2, MoveType: "heal", Uses: -1}
-	heal3 := move{Name: "heal3", Value: 3, MoveType: "heal", Uses: -1}
-	heal4 := move{Name: "heal4", Value: 4, MoveType: "heal", Uses: 2}
-	attack := move{Name: "attack", Value: 2, MoveType: "attack", Uses: -1}
-	p1 := &player{Elite: Elite{Name: "P1", Hp: 100, Moves: []move{heal1, heal2, heal3, heal4, attack}}}
-	p2 := &player{Elite: Elite{Name: "P2", Hp: 100, Moves: []move{heal1, attack}}, enemy: p1}
-	p1.enemy = p2
-
 	g := &game{turn: 1}
+	g.Run()
+
+}
+
+func (g game) Run() {
+
+	chars := LoadElites()
+
+	var players []*player
+	p1 := &player{Elite: chars.Elites[0]}
+	p2 := &player{Elite: chars.Elites[1]}
+	p1.enemy = p2
+	p2.enemy = p1
+
 	g.players = append(players, p1, p2)
 	for turn := 0; turn < 10; turn++ {
 		for _, p := range g.players {
