@@ -55,13 +55,13 @@ func (g *game) changeTurns() {
 	g.turn = 1
 }
 
-func (g game) GetInput() int {
-	fmt.Printf("%s's command: ", g.players[g.turn-1].Name)
+func GetInput() int {
 	reader := bufio.NewReader(os.Stdin)
 	input, _ := reader.ReadString('\n')
 	if input[0:1] == "q" {
 		quitGame("Thanks for playing!")
 	}
+	// make sure we're getting a valid digit here
 	val, _ := strconv.Atoi(input[0:1])
 	return val
 }
@@ -92,6 +92,7 @@ func (p player) showOpts() {
 		}
 
 	}
+	fmt.Println()
 }
 
 func (p *player) handleInput(cmd int) error {
@@ -123,20 +124,27 @@ func quitGame(msg string) {
 func main() {
 	g := &game{turn: 1}
 	g.Run()
+}
 
+func CharacterSelectMenu(player int, chars Characters) Elite {
+	for i, c := range chars.Elites {
+		fmt.Println(i, c)
+	}
+	choice := GetInput()
+	return chars.Elites[choice]
 }
 
 func (g game) Run() {
-
 	chars := LoadElites()
-
-	var players []*player
-	p1 := &player{Elite: chars.Elites[0]}
-	p2 := &player{Elite: chars.Elites[1]}
+	player1 := CharacterSelectMenu(1, chars)
+	player2 := CharacterSelectMenu(2, chars)
+	p1 := &player{Elite: player1}
+	p2 := &player{Elite: player2}
 	p1.enemy = p2
 	p2.enemy = p1
 
-	g.players = append(players, p1, p2)
+	g.players = []*player{p1, p2}
+	//g.players = append(players, p1, p2)
 	for turn := 0; turn < 10; turn++ {
 		for _, p := range g.players {
 			g.showStatus()
@@ -144,7 +152,7 @@ func (g game) Run() {
 
 			validInput := false
 			for validInput != true {
-				err := p.handleInput(g.GetInput())
+				err := p.handleInput(GetInput())
 				if err != nil {
 					fmt.Println(err.Error())
 					continue
