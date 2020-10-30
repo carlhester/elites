@@ -48,6 +48,16 @@ func (g game) showStatus() {
 	fmt.Println()
 }
 
+func (g game) CheckEnd() {
+	for i := range g.players {
+		if g.players[i].Hp <= 0 {
+			fmt.Printf("%s has been defeated! Good Game!", g.players[i].Name)
+			os.Exit(0)
+		}
+
+	}
+}
+
 func (g *game) changeTurns() {
 	if g.turn == 1 {
 		g.turn = 2
@@ -133,7 +143,7 @@ func Clear() {
 }
 
 func CharacterSelectMenu(player int, chars Characters) Elite {
-	fmt.Printf("\n\nSelect your fighter:\n")
+	fmt.Printf("\n\nMeet the Elites!\n\n")
 
 	for i, c := range chars.Elites {
 		fmt.Printf("[%d]  ", i)
@@ -145,32 +155,31 @@ func CharacterSelectMenu(player int, chars Characters) Elite {
 		}
 		fmt.Println()
 	}
+	fmt.Printf("\n\nSelect your fighter:\n")
 	choice := GetInput()
 	return chars.Elites[choice]
 }
 
 func MainMenu() {
 	Clear()
+	delay := 50 * time.Millisecond
 
 	for i := 0; i < 13; i++ {
 		fmt.Printf("*")
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(delay)
 	}
-	time.Sleep(1 * time.Second)
+	time.Sleep(delay)
 	fmt.Printf("\n*   ELITE   *\n")
-	time.Sleep(1 * time.Second)
 	fmt.Printf("*           *\n")
-	time.Sleep(1 * time.Second)
 	fmt.Printf("*  MONSTER  *\n")
-	time.Sleep(1 * time.Second)
 	fmt.Printf("*           *\n")
-	time.Sleep(1 * time.Second)
 	fmt.Printf("*   CARDS   *\n")
+	time.Sleep(delay)
 	for i := 0; i < 13; i++ {
 		fmt.Printf("*")
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(delay)
 	}
-	time.Sleep(1 * time.Second)
+	time.Sleep(delay)
 	fmt.Printf("\n\nPress enter to continue...")
 	_ = GetInput()
 
@@ -178,18 +187,18 @@ func MainMenu() {
 
 func (g game) Run() {
 	MainMenu()
+	Clear()
+
 	chars := LoadElites()
-	player1 := CharacterSelectMenu(1, chars)
-	player2 := CharacterSelectMenu(2, chars)
-	p1 := &player{Elite: player1}
-	p2 := &player{Elite: player2}
+	p1 := &player{Elite: CharacterSelectMenu(1, chars)}
+	p2 := &player{Elite: CharacterSelectMenu(2, chars)}
 	p1.enemy = p2
 	p2.enemy = p1
 
 	g.players = []*player{p1, p2}
-	//g.players = append(players, p1, p2)
 	for turn := 0; turn < 10; turn++ {
 		for _, p := range g.players {
+			Clear()
 			g.showStatus()
 			g.players[g.turn-1].showOpts()
 
@@ -204,6 +213,7 @@ func (g game) Run() {
 			}
 
 			p.doNextMove()
+			g.CheckEnd()
 			g.changeTurns()
 		}
 	}

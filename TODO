@@ -1,7 +1,7 @@
 x -- reduce uses on use
 x -- disallow use if use is zero
 add stun/other attack types
-load mobs/moves from yaml
+x -- load mobs/moves from yaml
 pretty display
 separate output to its own object
 add move descriptions array that prints when a move is used
