@@ -1,23 +1,42 @@
 Elites:
-- Name: Bob
-  Hp: 5
+- Name: Lincoln
+  Hp: 100
   Moves: 
-    - Name: swing
-      Value: 3
+    - Name: Dance Move
+      Value: 15
       MoveType: attack
       Uses: -1 
-    - Name: heal
+    - Name: Overwhelming creativity
+      Value: 50
+      MoveType: attack
+      Uses: 1 
+    - Name: bandaids
       Value: 10
       MoveType: heal
-      Uses: 1 
-- Name: Joe
-  Hp: 10
+      Uses: 10
+- Name: Rowan
+  Hp: 100
   Moves: 
-    - Name: kick
-      Value: 3
+    - Name: Blue Pump
+      Value: 10
       MoveType: attack
       Uses: -1 
-    - Name: bandage
+    - Name: Slurp Juice
+      Value: 15
+      MoveType: heal
+      Uses: 2 
+- Name: Dad
+  Hp: 250
+  Moves: 
+    - Name: Angry Glare
+      Value: 15
+      MoveType: attack
+      Uses: -1 
+    - Name: Surprise Attack Slap
+      Value: 45
+      MoveType: attack
+      Uses: -1 
+    - Name: Ice Pack
       Value: 10
       MoveType: heal
-      Uses: 1 
+      Uses: 2

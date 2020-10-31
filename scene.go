@@ -8,20 +8,22 @@ import (
 func CharacterSelectMenu(player int, chars Characters) Elite {
 	fmt.Printf("\n\nMeet the Elites!\n\n")
 
+	fmt.Printf("[ # ]\tName\tHp\tMoves\n")
+	fmt.Printf("=============================\n")
+
 	for i, c := range chars.Elites {
-		fmt.Printf("[%d]  ", i)
-		fmt.Printf("Name: %s\t", c.Name)
-		fmt.Printf("HP: %d\t", c.Hp)
-		fmt.Printf("Moves: ")
+		fmt.Printf("[ %d ]\t", i)
+		fmt.Printf("%s\t", c.Name)
+		fmt.Printf("%d\t", c.Hp)
 		for _, x := range c.Moves {
-			fmt.Printf("%s (%s)\t", x.Name, x.MoveType)
+			fmt.Printf("%s (%s)\n\t\t\t", x.Name, x.MoveType)
 		}
 		fmt.Println()
 	}
 	fmt.Printf("\n\nPlayer %d! Select your fighter: ", player)
 	choice := GetInput()
-	fmt.Printf("\n\n%s! Wise choice!\n", chars.Elites[choice].Name)
-	time.Sleep(1 * time.Second)
+	fmt.Printf("\n\nPlayer %d selects %s! A wise choice!\n", player, chars.Elites[choice].Name)
+	time.Sleep(2 * time.Second)
 	Clear()
 	return chars.Elites[choice]
 }
