@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"time"
 )
 
 type game struct {
@@ -20,18 +21,19 @@ func (g game) Run() {
 	p2.enemy = p1
 
 	g.players = []*player{p1, p2}
-	for turn := 0; turn < 10; turn++ {
+	for {
 		for _, p := range g.players {
 			Clear()
 			g.showStatus()
-			g.players[g.turn-1].showOpts()
-			g.players[g.turn-1].MovePrompt()
-
 			validInput := false
 			for validInput != true {
+				g.players[g.turn-1].showMoves()
+				g.players[g.turn-1].MovePrompt()
+
 				err := p.handleInput(GetInput())
 				if err != nil {
 					fmt.Println(err.Error())
+					time.Sleep(2 * time.Second)
 					continue
 				}
 				validInput = true

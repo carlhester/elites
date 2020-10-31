@@ -3,8 +3,8 @@ Elites:
   Hp: 100
   Moves: 
     - Name: Dance Move
-      Value: 15
-      MoveType: attack
+      Value: 1
+      MoveType: stun
       Uses: -1 
     - Name: Overwhelming creativity
       Value: 50
@@ -32,7 +32,7 @@ Elites:
       Value: 15
       MoveType: attack
       Uses: -1 
-    - Name: Surprise Attack Slap
+    - Name: Scrabble Slap
       Value: 45
       MoveType: attack
       Uses: -1 
@@ -40,3 +40,41 @@ Elites:
       Value: 10
       MoveType: heal
       Uses: 2
+- Name: Dring King 
+  Hp: 120
+  Moves: 
+    - Name: Whack
+      Value: 10
+      MoveType: attack
+      Uses: -1 
+    - Name: Drink
+      Value: 5
+      MoveType: heal
+      Uses: -1 
+    - Name: Sleepy Splash
+      Value: 1
+      MoveType: stun
+      Uses: -1
+- Name: Cobra Kid
+  Hp: 80
+  Moves: 
+    - Name: Venom Bite
+      Value: 15
+      MoveType: attack
+      Uses: -1 
+    - Name: Whack
+      Value: 10
+      MoveType: attack
+      Uses: -1 
+    - Name: Potion of Venom
+      Value: 10
+      MoveType: heal
+      Uses: -1
+    - Name: Snakey Uppercut
+      Value: 20
+      MoveType: attack
+      Uses: 1
+    - Name: Venom Explosion
+      Value: 30
+      MoveType: attack
+      Uses: 1
