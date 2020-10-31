@@ -26,9 +26,12 @@ func (p player) showOpts() {
 		} else {
 			fmt.Printf("[%d]  %s (Uses: %d)\n", i, p.Moves[i].Name, p.Moves[i].Uses)
 		}
-
 	}
 	fmt.Println()
+}
+
+func (p player) MovePrompt() {
+	fmt.Printf("%s's move: ", p.Name)
 }
 
 func (p *player) handleInput(cmd int) error {
