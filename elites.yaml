@@ -6,6 +6,10 @@ Elites:
       Value: 1
       MoveType: stun
       Uses: -1 
+    - Name: Sac
+      Value: 3
+      MoveType: sacrifice
+      Uses: -1 
     - Name: Overwhelming creativity
       Value: 50
       MoveType: attack

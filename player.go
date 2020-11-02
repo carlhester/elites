@@ -38,6 +38,14 @@ func (p *player) doNextMove() {
 		time.Sleep(2 * time.Second)
 		return
 	}
+	if p.nextMove.MoveType == "sacrifice" {
+		p.enemy.Hp -= p.nextMove.Value
+		p.Hp -= p.nextMove.Value
+
+		fmt.Printf("%s uses %s!", p.Name, p.nextMove.Name)
+		time.Sleep(2 * time.Second)
+		return
+	}
 
 }
 
