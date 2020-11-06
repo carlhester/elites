@@ -8,15 +8,25 @@ import (
 func CharacterSelectMenu(player int, chars Characters) Elite {
 	fmt.Printf("\n\nMeet the Elites!\n\n")
 
-	fmt.Printf("[ # ]\tName\tHp\tMoves\n")
+	fmt.Printf("[ # ]\tName\t\tMoves\n")
 	fmt.Printf("=============================\n")
 
 	for i, c := range chars.Elites {
 		fmt.Printf("[ %d ]\t", i)
-		fmt.Printf("%s\t", c.Name)
-		fmt.Printf("%d\t", c.Hp)
-		for _, x := range c.Moves {
-			fmt.Printf("%s (%s)\n\t\t\t", x.Name, x.MoveType)
+		fmt.Printf("%s", c.Name)
+		for i, x := range c.Moves {
+			switch i {
+			case 0:
+				if len(c.Name) > 8 {
+					fmt.Printf("\t%s (%s)\n", x.Name, x.MoveType)
+				} else {
+					fmt.Printf("\t\t%s (%s)\n", x.Name, x.MoveType)
+				}
+			case 1:
+				fmt.Printf("\tHp: %d\t\t%s (%s)\n", c.Hp, x.Name, x.MoveType)
+			default:
+				fmt.Printf("\t\t\t%s (%s)\n", x.Name, x.MoveType)
+			}
 		}
 		fmt.Println()
 	}

@@ -5,6 +5,7 @@ x -- load mobs/moves from yaml
 x -- handle improper moves by looping until valid input received
 x -- add quit command
 x -- add move that damages self and other (sacrifice)
+x -- improve char select alignment for long names
 Make sure input is valid for options given
 add intros for each
 add debuff/nerf attack (decrease enemy damage)
@@ -12,6 +13,5 @@ pretty display
 separate output to its own object
 add move descriptions array that prints when a move is used
 add megamax roll move
-fix name alignment when name is longer than 1 tab
 
 
