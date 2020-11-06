@@ -6,6 +6,7 @@ import (
 )
 
 func CharacterSelectMenu(player int, chars Characters) Elite {
+	output := Output{}
 	fmt.Printf("\n\nMeet the Elites!\n\n")
 
 	fmt.Printf("[ # ]\tName\t\tMoves\n")
@@ -34,12 +35,13 @@ func CharacterSelectMenu(player int, chars Characters) Elite {
 	choice := GetInput()
 	fmt.Printf("\n\nPlayer %d selects %s! A wise choice!\n", player, chars.Elites[choice].Name)
 	time.Sleep(2 * time.Second)
-	Clear()
+	output.Clear()
 	return chars.Elites[choice]
 }
 
 func MainMenu() {
-	Clear()
+	output := Output{}
+	output.Clear()
 	delay := 50 * time.Millisecond
 
 	for i := 0; i < 13; i++ {

@@ -9,10 +9,11 @@ import (
 type game struct {
 	players []*player
 	turn    int
+	output  *Output
 }
 
 func (g game) Run() {
-	Clear()
+	g.output.Clear()
 
 	chars := LoadElites()
 	p1 := &player{Elite: CharacterSelectMenu(1, chars)}
@@ -23,7 +24,7 @@ func (g game) Run() {
 	g.players = []*player{p1, p2}
 	for {
 		for _, p := range g.players {
-			Clear()
+			g.output.Clear()
 			g.showStatus()
 			validInput := false
 			for validInput != true {
