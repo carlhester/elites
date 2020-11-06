@@ -13,5 +13,4 @@ separate output to its own object
 add move descriptions array that prints when a move is used
 add megamax roll move
 fix name alignment when name is longer than 1 tab
-
-
+sac can have different dmg to self/enemy
