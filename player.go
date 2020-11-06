@@ -40,7 +40,7 @@ func (p *player) doNextMove() {
 	}
 	if p.nextMove.MoveType == "sacrifice" {
 		p.enemy.Hp -= p.nextMove.Value
-		p.Hp -= p.nextMove.Value
+		p.Hp -= p.nextMove.SacValue
 
 		fmt.Printf("%s uses %s!", p.Name, p.nextMove.Name)
 		time.Sleep(2 * time.Second)
@@ -52,9 +52,9 @@ func (p *player) doNextMove() {
 func (p player) showMoves() {
 	for i := range p.Moves {
 		if p.Moves[i].Uses == -1 {
-			fmt.Printf("[%d]  %s\n", i, p.Moves[i].Name)
+			fmt.Printf("[%d]  %s [%d]\n", i, p.Moves[i].Name, p.Moves[i].Value)
 		} else {
-			fmt.Printf("[%d]  %s (Uses: %d)\n", i, p.Moves[i].Name, p.Moves[i].Uses)
+			fmt.Printf("[%d]  %s [%d] (Uses: %d)\n", i, p.Moves[i].Name, p.Moves[i].Value, p.Moves[i].Uses)
 		}
 	}
 	fmt.Println()

@@ -8,7 +8,10 @@ import (
 
 func GetInput() int {
 	reader := bufio.NewReader(os.Stdin)
-	input, _ := reader.ReadString('\n')
+	var input string
+	for len(input) < 1 {
+		input, _ = reader.ReadString('\n')
+	}
 	if input[0:1] == "q" {
 		quitGame("\n\nThanks for playing!\n\n")
 	}

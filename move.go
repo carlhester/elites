@@ -5,4 +5,5 @@ type move struct {
 	Value    int    `yaml:"Value"`
 	MoveType string `yaml:"MoveType"`
 	Uses     int    `yaml:"Uses"`
+	SacValue int    `yaml:"SacValue"`
 }

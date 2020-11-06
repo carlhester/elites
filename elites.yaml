@@ -8,6 +8,7 @@ Elites:
       Uses: -1 
     - Name: Sac
       Value: 3
+      SacValue: 1
       MoveType: sacrifice
       Uses: -1 
     - Name: Overwhelming creativity
