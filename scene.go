@@ -23,7 +23,7 @@ func CharacterSelectMenu(player int, chars Characters) Elite {
 					fmt.Printf("\t\t%s (%s)\n", x.Name, x.MoveType)
 				}
 			case 1:
-				fmt.Printf("\tHp: %d\t\t%s (%s)\n", c.Hp, x.Name, x.MoveType)
+				fmt.Printf("\t%d hp\t\t%s (%s)\n", c.Hp, x.Name, x.MoveType)
 			default:
 				fmt.Printf("\t\t\t%s (%s)\n", x.Name, x.MoveType)
 			}
