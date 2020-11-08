@@ -5,8 +5,17 @@ import (
 	"time"
 )
 
-func CharacterSelectMenu(player int, chars Characters) Elite {
-	output := Output{}
+type Scene struct {
+	Output *Output
+}
+
+func NewScene(output *Output) *Scene {
+	return &Scene{
+		Output: output,
+	}
+}
+
+func (s *Scene) CharacterSelectMenu(player int, chars Characters) Elite {
 	fmt.Printf("\n\nMeet the Elites!\n\n")
 
 	fmt.Printf("[ # ]\tName\t\tMoves\n")
@@ -35,11 +44,11 @@ func CharacterSelectMenu(player int, chars Characters) Elite {
 	choice := GetInput()
 	fmt.Printf("\n\nPlayer %d selects %s! A wise choice!\n", player, chars.Elites[choice].Name)
 	time.Sleep(2 * time.Second)
-	output.Clear()
+	s.Output.Clear()
 	return chars.Elites[choice]
 }
 
-func MainMenu() {
+func (s *Scene) MainMenu() {
 	output := Output{}
 	output.Clear()
 	delay := 50 * time.Millisecond

@@ -1,10 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+)
 
 type Output struct {
 	buffer   []string
 	rendered []string
+	dest     io.Writer
+}
+
+func NewOutput(dest io.Writer) *Output {
+	return &Output{dest: dest}
 }
 
 func (o *Output) Clear() {

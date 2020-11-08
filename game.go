@@ -10,14 +10,15 @@ type game struct {
 	players []*player
 	turn    int
 	output  *Output
+	scene   *Scene
 }
 
 func (g game) Run() {
 	g.output.Clear()
 
 	chars := LoadElites()
-	p1 := &player{Elite: CharacterSelectMenu(1, chars)}
-	p2 := &player{Elite: CharacterSelectMenu(2, chars)}
+	p1 := &player{Elite: g.scene.CharacterSelectMenu(1, chars)}
+	p2 := &player{Elite: g.scene.CharacterSelectMenu(2, chars)}
 	p1.enemy = p2
 	p2.enemy = p1
 
