@@ -10,8 +10,6 @@ func main() {
 	flag.Bool("n", false, "network")
 	flag.Parse()
 
-	output := NewOutput(os.Stdout)
-	scene := NewScene(output)
 	g := &game{
 		turn:   1,
 		output: NewOutput(os.Stdout),

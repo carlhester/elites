@@ -34,7 +34,7 @@ func CharacterSelectMenu(player int, chars Characters, output *output) Elite {
 	choice := GetInput()
 	fmt.Printf("\n\nPlayer %d selects %s! A wise choice!\n", player, chars.Elites[choice].Name)
 	time.Sleep(2 * time.Second)
-	s.Output.Clear()
+	output.Clear()
 	return chars.Elites[choice]
 }
 
