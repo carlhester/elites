@@ -58,7 +58,7 @@ func (g game) showStatus() {
 func (g game) CheckEnd() {
 	for i := range g.players {
 		if g.players[i].Hp <= 0 {
-			fmt.Printf("\n\n%s has been defeated! Good Game!\n\n", g.players[i].Name)
+			g.output.Add(fmt.Sprintf("\n\n%s has been defeated! Good Game!\n\n", g.players[i].Name))
 			os.Exit(0)
 		}
 

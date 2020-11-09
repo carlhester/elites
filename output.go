@@ -24,16 +24,8 @@ func (o *output) Add(text string) {
 	o.buffer = append(o.buffer, text)
 }
 
-func (o *output) Parse() {
-	var results []string
-	for _, s := range o.buffer {
-		results = append(results, s)
+func (o *output) Render() {
+	for _, line := range o.buffer {
+		fmt.Fprintf(o.writeTo, line)
 	}
-
-	o.rendered = results
-	o.buffer = nil
-}
-
-func (o *output) Render(text string) {
-	fmt.Println(o.rendered)
 }
