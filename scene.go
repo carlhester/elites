@@ -5,17 +5,7 @@ import (
 	"time"
 )
 
-type Scene struct {
-	Output *Output
-}
-
-func NewScene(output *Output) *Scene {
-	return &Scene{
-		Output: output,
-	}
-}
-
-func (s *Scene) CharacterSelectMenu(player int, chars Characters) Elite {
+func CharacterSelectMenu(player int, chars Characters, output *output) Elite {
 	fmt.Printf("\n\nMeet the Elites!\n\n")
 
 	fmt.Printf("[ # ]\tName\t\tMoves\n")
@@ -48,8 +38,7 @@ func (s *Scene) CharacterSelectMenu(player int, chars Characters) Elite {
 	return chars.Elites[choice]
 }
 
-func (s *Scene) MainMenu() {
-	output := Output{}
+func MainMenu(output *output) {
 	output.Clear()
 	delay := 50 * time.Millisecond
 

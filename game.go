@@ -9,16 +9,15 @@ import (
 type game struct {
 	players []*player
 	turn    int
-	output  *Output
-	scene   *Scene
+	output  *output
 }
 
 func (g game) Run() {
 	g.output.Clear()
 
 	chars := LoadElites()
-	p1 := &player{Elite: g.scene.CharacterSelectMenu(1, chars)}
-	p2 := &player{Elite: g.scene.CharacterSelectMenu(2, chars)}
+	p1 := &player{Elite: CharacterSelectMenu(1, chars, g.output)}
+	p2 := &player{Elite: CharacterSelectMenu(2, chars, g.output)}
 	p1.enemy = p2
 	p2.enemy = p1
 
@@ -49,11 +48,11 @@ func (g game) Run() {
 }
 
 func (g game) showStatus() {
-	fmt.Println("================")
-	for _, g := range g.players {
-		fmt.Println(g.Name, ":", g.Hp)
+	g.output.Add("================\n")
+	for _, p := range g.players {
+		g.output.Add(fmt.Sprintf("%s:%d\n", p.Name, p.Hp))
 	}
-	fmt.Println()
+	g.output.Add("================\n")
 }
 
 func (g game) CheckEnd() {

@@ -5,26 +5,26 @@ import (
 	"io"
 )
 
-type Output struct {
+type output struct {
 	buffer   []string
 	rendered []string
-	dest     io.Writer
+	writeTo  io.Writer
 }
 
-func NewOutput(dest io.Writer) *Output {
-	return &Output{dest: dest}
+func NewOutput(writer io.Writer) *output {
+	return &output{writeTo: writer}
 }
 
-func (o *Output) Clear() {
+func (o *output) Clear() {
 	fmt.Print("\033[2J")
 	fmt.Print("\033[H")
 }
 
-func (o *Output) Add(text string) {
+func (o *output) Add(text string) {
 	o.buffer = append(o.buffer, text)
 }
 
-func (o *Output) Parse() {
+func (o *output) Parse() {
 	var results []string
 	for _, s := range o.buffer {
 		results = append(results, s)
@@ -34,6 +34,6 @@ func (o *Output) Parse() {
 	o.buffer = nil
 }
 
-func (o *Output) Render(text string) {
+func (o *output) Render(text string) {
 	fmt.Println(o.rendered)
 }

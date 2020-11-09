@@ -14,8 +14,7 @@ func main() {
 	scene := NewScene(output)
 	g := &game{
 		turn:   1,
-		output: output,
-		scene:  scene,
+		output: NewOutput(os.Stdout),
 	}
 	g.Run()
 }
