@@ -16,8 +16,9 @@ func NewOutput(writer io.Writer) *output {
 }
 
 func (o *output) Clear() {
-	fmt.Print("\033[2J")
-	fmt.Print("\033[H")
+	fmt.Fprintf(o.writeTo, "\033[2J")
+	fmt.Fprintf(o.writeTo, "\033[H")
+	o.Render()
 }
 
 func (o *output) Add(text string) {

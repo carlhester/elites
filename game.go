@@ -16,8 +16,8 @@ func (g game) Run() {
 	g.output.Clear()
 
 	chars := LoadElites()
-	p1 := &player{Elite: CharacterSelectMenu(1, chars, g.output)}
-	p2 := &player{Elite: CharacterSelectMenu(2, chars, g.output)}
+	p1 := &player{Elite: CharacterSelectMenu(1, chars, g.output), output: g.output}
+	p2 := &player{Elite: CharacterSelectMenu(2, chars, g.output), output: g.output}
 	p1.enemy = p2
 	p2.enemy = p1
 
@@ -48,11 +48,11 @@ func (g game) Run() {
 }
 
 func (g game) showStatus() {
-	g.output.Add("================\n")
+	g.output.Add("\n================\n")
 	for _, p := range g.players {
 		g.output.Add(fmt.Sprintf("%s:%d\n", p.Name, p.Hp))
 	}
-	g.output.Add("================\n")
+	g.output.Add("\n================\n")
 }
 
 func (g game) CheckEnd() {

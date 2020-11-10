@@ -32,6 +32,7 @@ func CharacterSelectMenu(player int, chars Characters, output *output) Elite {
 		output.Render()
 	}
 	output.Add(fmt.Sprintf("\n\nPlayer %d! Select your fighter: ", player))
+	output.Render()
 	choice := GetInput()
 	output.Add(fmt.Sprintf("\n\nPlayer %d selects %s! A wise choice!\n", player, chars.Elites[choice].Name))
 	output.Render()
@@ -57,10 +58,12 @@ func MainMenu(output *output) {
 	time.Sleep(delay)
 	for i := 0; i < 13; i++ {
 		output.Add("*")
+		output.Render()
 		time.Sleep(delay)
 	}
 	time.Sleep(delay)
 	output.Add(fmt.Sprintf("\n\nPress enter to continue..."))
+	output.Render()
 	_ = GetInput()
 
 }

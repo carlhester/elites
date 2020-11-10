@@ -7,12 +7,20 @@ import (
 )
 
 func main() {
-	flag.Bool("n", false, "network")
+	out := os.Stdout
+	network := flag.Bool("n", false, "network")
 	flag.Parse()
+
+	if *network == true {
+		fmt.Println("starting network")
+		//startlistener
+		//getconn
+		//out := conn
+	}
 
 	g := &game{
 		turn:   1,
-		output: NewOutput(os.Stdout),
+		output: NewOutput(out),
 	}
 	g.Run()
 }
