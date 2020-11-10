@@ -3,24 +3,43 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io"
+	"log"
+	"net"
 	"os"
 )
 
+var addr = "localhost:8181"
+
 func main() {
-	out := os.Stdout
 	network := flag.Bool("n", false, "network")
 	flag.Parse()
 
 	if *network == true {
-		fmt.Println("starting network")
-		//startlistener
-		//getconn
-		//out := conn
+		log.Printf("starting network on %s", addr)
+		listener, err := net.Listen("tcp", addr)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		for {
+			conn, err := listener.Accept()
+			if err != nil {
+				log.Print(err)
+				continue
+			}
+			go startGame(conn)
+		}
+	} else {
+		startGame(os.Stdout)
 	}
 
+}
+
+func startGame(output io.Writer) {
 	g := &game{
 		turn:   1,
-		output: NewOutput(out),
+		output: NewOutput(output),
 	}
 	g.Run()
 }

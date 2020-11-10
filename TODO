@@ -7,11 +7,11 @@ x -- add quit command
 x -- add move that damages self and other (sacrifice)
 x -- improve char select alignment for long names
 x -- sac can have different dmg to self/enemy
+x -- separate output to its own object
 Make sure input is valid for options given
 add intros for each
 add debuff/nerf attack (decrease enemy damage)
 pretty display
-separate output to its own object
 add move descriptions array that prints when a move is used
 add megamax roll move
 add networking client/server
