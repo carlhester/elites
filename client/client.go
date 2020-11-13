@@ -15,6 +15,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer conn.Close()
 
 	conn.SetKeepAlive(true)
 	conn.SetKeepAlivePeriod(1 * time.Second)
@@ -27,5 +28,4 @@ func main() {
 			done <- struct{}{}       // signal the main goroutine
 		}()
 	}
-	conn.Close()
 }
