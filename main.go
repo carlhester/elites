@@ -9,15 +9,14 @@ import (
 	"os"
 )
 
-var addr = "localhost:8181"
-
 func main() {
 	network := flag.Bool("n", false, "network")
 	flag.Parse()
 
-	if *network == true {
+	if *network {
+		addr := &net.TCPAddr{Port: 8181}
 		log.Printf("starting network on %s", addr)
-		listener, err := net.Listen("tcp", addr)
+		listener, err := net.ListenTCP("tcp", addr)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -28,6 +27,7 @@ func main() {
 				log.Print(err)
 				continue
 			}
+			fmt.Printf("Connect: %s...\n", conn.RemoteAddr())
 			go startGame(conn)
 		}
 	} else {
