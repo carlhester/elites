@@ -7,9 +7,13 @@ import (
 	"log"
 	"net"
 	"os"
+	"time"
 )
 
 func main() {
+	var clients []io.Writer
+	clients = append(clients, os.Stdout)
+
 	network := flag.Bool("n", false, "network")
 	flag.Parse()
 
@@ -28,18 +32,23 @@ func main() {
 				continue
 			}
 			fmt.Printf("Connect: %s...\n", conn.RemoteAddr())
-			go startGame(conn)
+			time.Sleep(3 * time.Second)
+			clients = append(clients, conn)
+			for _, client := range clients {
+				fmt.Fprintf(client, "hello!\n")
+			}
+			go startGame(clients)
 		}
 	} else {
-		startGame(os.Stdout)
+		startGame(clients)
 	}
 
 }
 
-func startGame(output io.Writer) {
+func startGame(clients []io.Writer) {
 	g := &game{
-		turn:   1,
-		output: NewOutput(output),
+		turn:    1,
+		outputs: NewOutputs(clients),
 	}
 	g.Run()
 }

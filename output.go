@@ -11,8 +11,12 @@ type output struct {
 	writeTo  io.Writer
 }
 
-func NewOutput(writer io.Writer) *output {
-	return &output{writeTo: writer}
+func NewOutputs(writer []io.Writer) []*output {
+	var outputters []*output
+	for _, w := range writer {
+		outputters = append(outputters, &output{writeTo: w})
+	}
+	return outputters
 }
 
 func (o *output) Clear() {

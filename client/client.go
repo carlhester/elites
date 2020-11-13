@@ -15,11 +15,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer conn.Close()
 
 	conn.SetKeepAlive(true)
-	conn.SetLinger(10)
-	conn.SetNoDelay(false)
+	conn.SetKeepAlivePeriod(1 * time.Second)
 
 	//reader := bufio.NewScanner(conn)
 	for {
@@ -28,6 +26,6 @@ func main() {
 			io.Copy(os.Stdout, conn) // NOTE: ignoring errors
 			done <- struct{}{}       // signal the main goroutine
 		}()
-		time.Sleep(1 * time.Second)
 	}
+	conn.Close()
 }
