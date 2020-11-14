@@ -17,7 +17,9 @@ func main() {
 	defer conn.Close()
 
 	for {
-		message, _ := bufio.NewReader(conn).ReadString('\n')
-		fmt.Print("-> " + message)
+		scanner := bufio.NewScanner(conn)
+		for scanner.Scan() {
+			fmt.Print(scanner.Text() + "\n")
+		}
 	}
 }

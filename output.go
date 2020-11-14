@@ -20,21 +20,28 @@ func (o *output) addWriteTo(writer io.Writer) {
 }
 
 func (o *output) Clear() {
-	for _, out := range o.writeTo {
-		fmt.Fprintf(out, "\033[2J")
-		fmt.Fprintf(out, "\033[H")
-		o.Render()
-	}
+	/*
+		for _, out := range o.writeTo {
+			fmt.Fprintf(out, "\033[2J")
+			fmt.Fprintf(out, "\033[H")
+			o.Render()
+		}
+	*/
 }
 
 func (o *output) Add(text string) {
 	o.buffer = append(o.buffer, text)
+	o.buffer = append(o.buffer, "\n")
+	o.Render()
 }
 
 func (o *output) Render() {
-	for _, out := range o.writeTo {
-		for _, line := range o.buffer {
-			fmt.Fprintf(out, line)
+	for _, line := range o.buffer {
+		for _, out := range o.writeTo {
+			_, err := fmt.Fprintf(out, line)
+			if err != nil {
+				fmt.Printf("%+w", err)
+			}
 		}
 	}
 	o.buffer = []string{}

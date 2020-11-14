@@ -7,7 +7,6 @@ import (
 
 func CharacterSelectMenu(player int, chars Characters, output *output) Elite {
 	output.Clear()
-	output.Add(fmt.Sprintf("\n\nMeet the Elites!\n\n"))
 	output.Add(fmt.Sprintf("[ # ]\tName\t\tMoves\n"))
 	output.Add(fmt.Sprintf("=============================\n"))
 	output.Render()

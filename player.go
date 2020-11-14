@@ -58,9 +58,9 @@ func (p *player) doNextMove() {
 func (p player) showMoves() {
 	for i := range p.Moves {
 		if p.Moves[i].Uses == -1 {
-			p.output.Add(fmt.Sprintf("[%d]  %s [%d]\n", i, p.Moves[i].Name, p.Moves[i].Value))
+			p.output.Add(fmt.Sprintf("[%d]  %s [%d]", i, p.Moves[i].Name, p.Moves[i].Value))
 		} else {
-			p.output.Add(fmt.Sprintf("[%d]  %s [%d] (Uses: %d)\n", i, p.Moves[i].Name, p.Moves[i].Value, p.Moves[i].Uses))
+			p.output.Add(fmt.Sprintf("[%d]  %s [%d] (Uses: %d)", i, p.Moves[i].Name, p.Moves[i].Value, p.Moves[i].Uses))
 		}
 		p.output.Render()
 	}
@@ -69,6 +69,7 @@ func (p player) showMoves() {
 
 func (p player) MovePrompt() {
 	p.output.Add(fmt.Sprintf("%s's move: ", p.Name))
+	p.output.Add("")
 	p.output.Render()
 }
 

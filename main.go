@@ -9,16 +9,16 @@ import (
 )
 
 func main() {
-	output := NewOutput()
-	output.addWriteTo(os.Stdout)
-
 	network := flag.Bool("n", false, "network")
 	flag.Parse()
+
+	output := NewOutput()
+	output.addWriteTo(os.Stdout)
 
 	if *network {
 		go func() {
 			addr := &net.TCPAddr{Port: 8181}
-			log.Printf("starting network on %s", addr)
+			fmt.Printf("listening on %s", addr)
 			listener, err := net.ListenTCP("tcp", addr)
 			if err != nil {
 				log.Fatal(err)
