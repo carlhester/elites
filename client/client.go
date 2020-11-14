@@ -1,11 +1,10 @@
 package main
 
 import (
-	"io"
+	"bufio"
+	"fmt"
 	"log"
 	"net"
-	"os"
-	"time"
 )
 
 func main() {
@@ -17,15 +16,8 @@ func main() {
 	}
 	defer conn.Close()
 
-	conn.SetKeepAlive(true)
-	conn.SetKeepAlivePeriod(1 * time.Second)
-
-	//reader := bufio.NewScanner(conn)
 	for {
-		done := make(chan struct{})
-		go func() {
-			io.Copy(os.Stdout, conn) // NOTE: ignoring errors
-			done <- struct{}{}       // signal the main goroutine
-		}()
+		message, _ := bufio.NewReader(conn).ReadString('\n')
+		fmt.Print("-> " + message)
 	}
 }

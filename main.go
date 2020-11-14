@@ -3,52 +3,45 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io"
 	"log"
 	"net"
 	"os"
-	"time"
 )
 
 func main() {
-	var clients []io.Writer
-	clients = append(clients, os.Stdout)
+	output := NewOutput()
+	output.addWriteTo(os.Stdout)
 
 	network := flag.Bool("n", false, "network")
 	flag.Parse()
 
 	if *network {
-		addr := &net.TCPAddr{Port: 8181}
-		log.Printf("starting network on %s", addr)
-		listener, err := net.ListenTCP("tcp", addr)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		for {
-			conn, err := listener.Accept()
+		go func() {
+			addr := &net.TCPAddr{Port: 8181}
+			log.Printf("starting network on %s", addr)
+			listener, err := net.ListenTCP("tcp", addr)
 			if err != nil {
-				log.Print(err)
-				continue
+				log.Fatal(err)
 			}
-			fmt.Printf("Connect: %s...\n", conn.RemoteAddr())
-			time.Sleep(3 * time.Second)
-			clients = append(clients, conn)
-			for _, client := range clients {
-				fmt.Fprintf(client, "hello!\n")
-			}
-			go startGame(clients)
-		}
-	} else {
-		startGame(clients)
-	}
 
+			for {
+				conn, err := listener.Accept()
+				if err != nil {
+					log.Print(err)
+					continue
+				}
+				fmt.Printf("Connect: %s...\n", conn.RemoteAddr())
+				output.addWriteTo(conn)
+			}
+		}()
+	}
+	startGame(output)
 }
 
-func startGame(clients []io.Writer) {
+func startGame(output *output) {
 	g := &game{
-		turn:    1,
-		outputs: NewOutputs(clients),
+		turn:   1,
+		output: output,
 	}
 	g.Run()
 }
